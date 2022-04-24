@@ -1,10 +1,10 @@
 # Swaggo Demo
 
-Check [[gin-swagger][https://github.com/swaggo/gin-swagger]] for details.
+Check [gin-swagger](https://github.com/swaggo/gin-swagger) for details.
 
 1. Install swag
 ```bash
-$ go install github.com/swaggo/swag/cmd/swag
+$ go get -u github.com/swaggo/swag/cmd/swag
 ```
 
 2. Generate swagger docs
@@ -22,4 +22,4 @@ docs
 $ go run .
 ```
 
-4. Check [[http://localhost:8080/swagger/index.html]].
+4. Check swagger [index](http://localhost:8080/swagger/index.html) page.
