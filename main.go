@@ -1,12 +1,12 @@
 package main
 
 import (
+	docs "demo/docs"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-	"io/ioutil"
-	"net/http"
-	docs "wayfeng/gin-swag-demo/docs"
 )
 
 func main() {
@@ -22,15 +22,13 @@ func main() {
 	})
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
-	r.Run()
+	r.Run(":3000")
 }
 
 // @BasePath /api/v1
-// PingDemo godoc
+// @Tags Swagger Demo
 // @Summary ping demo
-// @Schemes
 // @Description handle ping request
-// @Tags demo
 // @Accept json
 // @Produce json
 // @Success 200 {string} pong
@@ -39,23 +37,26 @@ func Pong(c *gin.Context) {
 	c.JSON(http.StatusOK, "pong")
 }
 
-// @BasePath /api/v1
-// PingDemo godoc
 // @Summary echo demo
-// @Schemes
 // @Description echo input request
-// @Param name query string true "Name"
-// @Param state query int false "State"
-// @Param created_by query int false "CreatedBy"
-// @Tags demo
+// @Tags Swagger Demo
+// @Param name body []main.User true "User information"
 // @Accept json
 // @Produce json
-// @Success 200 {string} json {}
+// @Success 200 {array} main.User "OK"
 // @Router /echo [post]
 func Echo(c *gin.Context) {
-	data, err := ioutil.ReadAll(c.Request.Body)
-	if err != nil {
-		c.JSON(http.StatusNotFound, "Failed")
+	/*
+		data, err := ioutil.ReadAll(c.Request.Body)
+		if err != nil {
+			c.JSON(http.StatusNotFound, "Failed")
+		}
+		c.JSON(http.StatusOK, data)
+	*/
+	var u []User
+	if c.Bind(&u) == nil {
+		c.JSON(http.StatusOK, u)
+	} else {
+		c.JSON(http.StatusBadRequest, "Failed")
 	}
-	c.JSON(http.StatusOK, data)
 }

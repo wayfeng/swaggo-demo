@@ -1,4 +1,4 @@
-module wayfeng/gin-swag-demo
+module demo
 
 go 1.17
 
